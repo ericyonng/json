@@ -150,7 +150,7 @@ endif()
 
 ### Package Managers
 
-:beer: If you are using OS X and [Homebrew](http://brew.sh), just type `brew tap nlohmann/json` and `brew install nlohmann_json` and you're set. If you want the bleeding edge rather than the latest release, use `brew install nlohmann_json --HEAD`.
+:beer: If you are using OS X and [Homebrew](http://brew.sh), just type `brew tap nlohmann/json` and `brew install nlohmann-json` and you're set. If you want the bleeding edge rather than the latest release, use `brew install nlohmann-json --HEAD`.
 
 If you are using the [Meson Build System](http://mesonbuild.com), then you can get a wrap file by downloading it from [Meson WrapDB](https://wrapdb.mesonbuild.com/nlohmann_json), or simply use `meson wrap install nlohmann_json`.
 
@@ -171,6 +171,8 @@ If you are using [CocoaPods](https://cocoapods.org), you can use the library by 
 If you are using [NuGet](https://www.nuget.org), you can use the package [nlohmann.json](https://www.nuget.org/packages/nlohmann.json/). Please check [this extensive description](https://github.com/nlohmann/json/issues/1132#issuecomment-452250255) on how to use the package. Please files issues [here](https://github.com/hnkb/nlohmann-json-nuget/issues).
 
 If you are using [conda](https://conda.io/), you can use the package [nlohmann_json](https://github.com/conda-forge/nlohmann_json-feedstock) from [conda-forge](https://conda-forge.org) executing `conda install -c conda-forge nlohmann_json`. Please file issues [here](https://github.com/conda-forge/nlohmann_json-feedstock/issues).
+
+If you are using [MSYS2](http://www.msys2.org/), your can use the [mingw-w64-nlohmann_json](https://packages.msys2.org/base/mingw-w64-nlohmann_json) package, just type `pacman -S mingw-w64-i686-nlohmann_json` or `pacman -S mingw-w64-x86_64-nlohmann_json` for installation. Please file issues [here](https://github.com/msys2/MINGW-packages/issues/new?title=%5Bnlohmann_json%5D) if you experience problems with the packages.
 
 ## Examples
 
@@ -243,7 +245,7 @@ json j2 = {
 };
 ```
 
-Note that in all these cases, you never need to "tell" the compiler which JSON value type you want to use. If you want to be explicit or express some edge cases, the functions [`json::array`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_aa80485befaffcadaa39965494e0b4d2e.html#aa80485befaffcadaa39965494e0b4d2e) and [`json::object`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_aa13f7c0615867542ce80337cbcf13ada.html#aa13f7c0615867542ce80337cbcf13ada) will help:
+Note that in all these cases, you never need to "tell" the compiler which JSON value type you want to use. If you want to be explicit or express some edge cases, the functions [`json::array()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a9ad7ec0bc1082ed09d10900fbb20a21f.html#a9ad7ec0bc1082ed09d10900fbb20a21f) and [`json::object()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_aaf509a7c029100d292187068f61c99b8.html#aaf509a7c029100d292187068f61c99b8) will help:
 
 ```cpp
 // a way to express the empty array []
@@ -278,7 +280,7 @@ auto j2 = R"(
 
 Note that without appending the `_json` suffix, the passed string literal is not parsed, but just used as JSON string value. That is, `json j = "{ \"happy\": true, \"pi\": 3.141 }"` would just store the string `"{ "happy": true, "pi": 3.141 }"` rather than parsing the actual object.
 
-The above example can also be expressed explicitly using [`json::parse()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a5a0339361f3282cb8fd2f9ede6e17d72.html#a5a0339361f3282cb8fd2f9ede6e17d72):
+The above example can also be expressed explicitly using [`json::parse()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_afd4ef1ac8ad50a5894a9afebca69140a.html#afd4ef1ac8ad50a5894a9afebca69140a):
 
 ```cpp
 // parse explicitly
@@ -321,7 +323,7 @@ std::cout << cpp_string << " == " << cpp_string2 << " == " << j_string.get<std::
 std::cout << j_string << " == " << serialized_string << std::endl;
 ```
 
-[`.dump()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a50ec80b02d0f3f51130d4abb5d1cfdc5.html#a50ec80b02d0f3f51130d4abb5d1cfdc5) always returns the serialized value, and [`.get<std::string>()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a16f9445f7629f634221a42b967cdcd43.html#a16f9445f7629f634221a42b967cdcd43) returns the originally stored string value.
+[`.dump()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a50ec80b02d0f3f51130d4abb5d1cfdc5.html#a50ec80b02d0f3f51130d4abb5d1cfdc5) always returns the serialized value, and [`.get<std::string>()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_aa6602bb24022183ab989439e19345d08.html#aa6602bb24022183ab989439e19345d08) returns the originally stored string value.
 
 Note the library only supports UTF-8. When you store strings with different encodings in the library, calling [`dump()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a50ec80b02d0f3f51130d4abb5d1cfdc5.html#a50ec80b02d0f3f51130d4abb5d1cfdc5) may throw an exception unless `json::error_handler_t::replace` or `json::error_handler_t::ignore` are used as error handlers.
 
@@ -1076,9 +1078,11 @@ The class contains the UTF-8 Decoder from Bjoern Hoehrmann which is licensed und
 
 The class contains a slightly modified version of the Grisu2 algorithm from Florian Loitsch which is licensed under the [MIT License](http://opensource.org/licenses/MIT) (see above). Copyright &copy; 2009 [Florian Loitsch](http://florian.loitsch.com/)
 
+The class contains a copy of [Hedley](https://nemequ.github.io/hedley/) from Evan Nemerson which is licensed as [CC0-1.0](http://creativecommons.org/publicdomain/zero/1.0/).
+
 ## Contact
 
-If you have questions regarding the library, I would like to invite you to [open an issue at GitHub](https://github.com/nlohmann/json/issues/new). Please describe your request, problem, or question as detailed as possible, and also mention the version of the library you are using as well as the version of your compiler and operating system. Opening an issue at GitHub allows other users and contributors to this library to collaborate. For instance, I have little experience with MSVC, and most issues in this regard have been solved by a growing community. If you have a look at the [closed issues](https://github.com/nlohmann/json/issues?q=is%3Aissue+is%3Aclosed), you will see that we react quite timely in most cases.
+If you have questions regarding the library, I would like to invite you to [open an issue at GitHub](https://github.com/nlohmann/json/issues/new/choose). Please describe your request, problem, or question as detailed as possible, and also mention the version of the library you are using as well as the version of your compiler and operating system. Opening an issue at GitHub allows other users and contributors to this library to collaborate. For instance, I have little experience with MSVC, and most issues in this regard have been solved by a growing community. If you have a look at the [closed issues](https://github.com/nlohmann/json/issues?q=is%3Aissue+is%3Aclosed), you will see that we react quite timely in most cases.
 
 Only if your request would contain confidential information, please [send me an email](mailto:mail@nlohmann.me). For encrypted messages, please use [this key](https://keybase.io/nlohmann/pgp_keys.asc).
 
@@ -1259,6 +1263,12 @@ I deeply appreciate the help of the following people.
 - [Hani](https://github.com/hnkb) documented how to install the library with NuGet.
 - [Mark Beckwith](https://github.com/wythe) fixed a typo.
 - [yann-morin-1998](https://github.com/yann-morin-1998) helped reducing the CMake requirement to version 3.1.
+- [Konstantin Podsvirov](https://github.com/podsvirov) maintains a package for the MSYS2 software distro.
+- [remyabel](https://github.com/remyabel) added GNUInstallDirs to the CMake files.
+- [Taylor Howard](https://github.com/taylorhoward92) fixed a unit test.
+- [Gabe Ron](https://github.com/Macr0Nerd) implemented the `to_string` method.
+- [Watal M. Iwasaki](https://github.com/heavywatal) fixed a Clang warning.
+- [Viktor Kirilov](https://github.com/onqtam) switched the unit tests from [Catch](https://github.com/philsquared/Catch) to [doctest](https://github.com/onqtam/doctest)
 
 Thanks a lot for helping out! Please [let me know](mailto:mail@nlohmann.me) if I forgot someone.
 
@@ -1285,6 +1295,7 @@ The library itself consists of a single header file licensed under the MIT licen
 - [**git-update-ghpages**](https://github.com/rstacruz/git-update-ghpages) to upload the documentation to gh-pages
 - [**GitHub Changelog Generator**](https://github.com/skywinder/github-changelog-generator) to generate the [ChangeLog](https://github.com/nlohmann/json/blob/develop/ChangeLog.md)
 - [**Google Benchmark**](https://github.com/google/benchmark) to implement the benchmarks
+- [**Hedley**](https://nemequ.github.io/hedley/) to avoid re-inventing several compiler-agnostic feature macros
 - [**lcov**](http://ltp.sourceforge.net/coverage/lcov.php) to process coverage information and create a HTML view
 - [**libFuzzer**](http://llvm.org/docs/LibFuzzer.html) to implement fuzz testing for OSS-Fuzz
 - [**OSS-Fuzz**](https://github.com/google/oss-fuzz) for continuous fuzz testing of the library ([project repository](https://github.com/google/oss-fuzz/tree/master/projects/json))
@@ -1325,7 +1336,7 @@ This library does not support comments. It does so for three reasons:
 
 	> Suppose you are using JSON to keep configuration files, which you would like to annotate. Go ahead and insert all the comments you like. Then pipe it through JSMin before handing it to your JSON parser.
 
-3. It dangerous for interoperability if some libraries would add comment support while others don't. Please check [The Harmful Consequences of the Robustness Principle](https://tools.ietf.org/html/draft-iab-protocol-maintenance-01) on this.
+3. It is dangerous for interoperability if some libraries would add comment support while others don't. Please check [The Harmful Consequences of the Robustness Principle](https://tools.ietf.org/html/draft-iab-protocol-maintenance-01) on this.
 
 This library will not support comments in the future. If you wish to use comments, I see three options:
 
